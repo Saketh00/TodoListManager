@@ -19,13 +19,18 @@
                     <ul>
                         <li>Today's Date = {{date}}</li>
                         <li><a href="{{url_for('todolist.task_list')}}">List all tasks</a></li>
+                        <li><a href="{{url_for('todolist.add_task')}}">Add a new task</a></li>
                     </ul>
                     {% endblock %}
 
                 </div>
                 <div class="col-8">
-                    {% block main %}
-                    
+                    {% block body %}
+                    {% if not ntasks %}
+                        There are no tasks. How about adding a task <a href="{{url_for('todolist.add_task')}}">here</a>
+                    {% else %}
+                        There are {{ntasks}} to be done. Click <a href="{{url_for('todolist.task_list')}}">here</a> to show all tasks.
+                    {% endif %}
                     {% endblock %}
                 </div>
             </div>

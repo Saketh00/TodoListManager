@@ -1,14 +1,9 @@
-<html>
-    <head>
-        <title>Todo List page</title>
-    </head>
-    <body>
-        <h1> Welcome to the todolist page </h1>
-        <ol>
-            {% for id, td_text in tasks%}
-            {{id}}::{{td_text}}
-            <br/>
-            {% endfor %}
-        </ol>
-    </body>
-</html>
+{% extends "index.html" %}
+{% block body %}
+    <ol>
+        {% for id, td_text in tasks%}
+        <li>{{td_text}}</li>
+        <br/>
+        {% endfor %}
+    </ol>
+{% endblock %}

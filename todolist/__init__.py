@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import datetime
+import psycopg2
 
 def create_app():
     app=Flask("todolist")
@@ -14,6 +15,10 @@ def create_app():
     @app.route("/")
     def index():
         date=datetime.datetime.now().strftime('%Y-%m-%d')
-        return render_template("index.html", date=date)
+        dbconn=db.get_db()
+        cursor=dbconn.cursor()
+        cursor.execute("select count(*) from list")
+        ntasks=cursor.fetchone()[0]
+        return render_template("index.html", date=date, ntasks=ntasks)
 
     return app
