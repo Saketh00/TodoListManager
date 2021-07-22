@@ -1,20 +1,23 @@
 import psycopg2
 import sys
-from flask import Flask, render_template
+from flask import Flask, render_template, g
+from flask import Blueprint
+from . import db
 
-app=Flask("Todolist site")
+bp=Blueprint("todolist", "todolist", url_prefix="/todolist")
 
-dbconn=psycopg2.connect("dbname=todolist")
 
-@app.route("/")
+@bp.route("/")
 def index():
+    dbconn=db.get_db()
     cursor=dbconn.cursor()
     cursor.execute("select count(*) from list")
     ntasks=cursor.fetchone()[0]
     return render_template("main.html",ntasks=ntasks)
 
-@app.route("/tasks")
+@bp.route("/tasks")
 def task_list():
+    dbconn=db.get_db()
     cursor=dbconn.cursor()
     cursor.execute("select * from list")
     tasks=cursor.fetchall()
