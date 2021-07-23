@@ -1,8 +1,8 @@
 {% extends "index.html" %}
 {% block body %}
     <ol>
-        {% for id, td_text in tasks%}
-        <li>{{td_text}}</li>
+        {% for id, td_text, deadline in tasks%}
+        <li>{{td_text}} ::: {{deadline}}</li>
         <br/>
         {% endfor %}
     </ol>

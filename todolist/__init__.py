@@ -12,9 +12,12 @@ def create_app():
     from . import main
     app.register_blueprint(main.bp)
 
+    from . import db
+    db.init_app(app)
+
     @app.route("/")
     def index():
-        date=datetime.datetime.now().strftime('%Y-%m-%d')
+        date=datetime.date.today()
         dbconn=db.get_db()
         cursor=dbconn.cursor()
         cursor.execute("select count(*) from list")

@@ -11,25 +11,22 @@ bp=Blueprint("todolist", "todolist", url_prefix="/todolist")
 def add_task():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    date=datetime.datetime.now().strftime('%Y-%m-%d')
+    date=datetime.date.today()
     if request.method=="GET":
         return render_template("addtask.html",date=date)
     elif request.method=="POST":
         new_task=request.form.get("new_task")
         input_date=request.form.get("input_date")
-        cursor.execute("insert into list (td_text) values (%s)",(new_task,))
+        cursor.execute("insert into list (td_text, deadline) values (%s,%s)",(new_task,input_date,))
         dbconn.commit()
-        return redirect(url_for("todolist.date_check",input_date=input_date),302)
+        return redirect(url_for("todolist.task_list"),302)
 
-@bp.route("/datecheck/<input_date>")
-def date_check(input_date):
-    return render_template("datecheck.html",input_date=input_date)
 
 @bp.route("/tasks")
 def task_list():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    cursor.execute("select * from list")
+    cursor.execute("select * from list order by deadline ")
     tasks=cursor.fetchall()
     date=datetime.datetime.now().strftime('%Y-%m-%d')
     return render_template("tasklist.html", tasks=tasks, date=date)
