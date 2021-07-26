@@ -22,6 +22,8 @@ def create_app():
         cursor=dbconn.cursor()
         cursor.execute("select count(*) from list")
         ntasks=cursor.fetchone()[0]
-        return render_template("index.html", date=date, ntasks=ntasks)
+        cursor.execute("select count(*) from list where deadline<= now()")
+        noverdue=cursor.fetchone()[0]
+        return render_template("index.html", ntasks=ntasks, noverdue=noverdue)
 
     return app

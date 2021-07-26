@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block body %}
+    {% if not tasks%}
+        There are no overdue tasks. Click <a href="{{url_for('todolist.task_list')}}">here</a> for all the tasks.
+    {% else %}
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Task Description</th>
+                <th>Deadline</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        {% for id, td_text, deadline in tasks%}
+            <tr>
+                <td>{{td_text}}</td>
+                <td>{{deadline}}</td>
+                <td> <a href="{{url_for('todolist.delete_task',value='overdue',tid=id)}}" class="btn btn-danger">Delete</a> </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

@@ -1,9 +1,9 @@
 {% extends "index.html" %}
 {% block body %}
     <form action="{{url_for('todolist.add_task')}}" method="POST">
-        <div id="myDiv" class="header">
-            <input type="text" id="new_task" name="new_task" placeholder="Add new task..">
-            <input type="date" id="input_date" name="input_date"><br><br>
+        <div id="myDiv">
+            <input type="text" id="new_task" name="new_task" placeholder="Add new task.." required>
+            <input type="date" id="input_date" name="input_date" required>
             <button type="submit" class="btn btn-primary">Add</button>
         </div>
     </form>

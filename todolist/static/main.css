@@ -1,0 +1,46 @@
+body{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container{
+    padding: 10px;
+    width: 550px;
+    margin: 0 auto;
+}
+
+.header{
+    width: 550px;
+    height: 250px;
+    background-image: url('img.jpg');
+    background-repeat: no-repeat;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+}
+
+.content{
+    position: relative;
+    top: 10px;
+    width: 550px;
+    height: auto;
+    background-color: #FFF;
+    overflow: auto;
+}
+
+table {
+    border: 1px solid black;
+}
+
+.content ::-webkit-scrollbar{
+    display: none;
+}
+
+#butns{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}

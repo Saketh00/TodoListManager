@@ -38,6 +38,14 @@ def week_schedule():
     tasks=cursor.fetchall()
     return render_template("weektask.html", tasks=tasks)
 
+@bp.route("/overdue")
+def overdue_list():
+    dbconn=db.get_db()
+    cursor=dbconn.cursor()
+    cursor.execute("select * from list where deadline<= now() order by deadline")
+    tasks=cursor.fetchall()
+    return render_template("overduetask.html", tasks=tasks)
+
 @bp.route("/<value>/<tid>")
 def delete_task(value,tid):
     dbconn=db.get_db()
@@ -48,6 +56,8 @@ def delete_task(value,tid):
         return redirect(url_for("todolist.task_list"),302)
     elif value=="week":
         return redirect(url_for("todolist.week_schedule"), 302)
+    elif value=="overdue":
+        return redirect(url_for("todolist.overdue_list"), 302)
 
 if __name__=="__main__":
     app.run()
