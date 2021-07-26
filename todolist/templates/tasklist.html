@@ -1,9 +1,19 @@
 {% extends "index.html" %}
 {% block body %}
-    <ol>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Task Description</th>
+                <th>Deadline</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
         {% for id, td_text, deadline in tasks%}
-        <li>{{td_text}} ::: {{deadline}}</li>
-        <br/>
+            <tr>
+                <td>{{td_text}}</td>
+                <td>{{deadline}}</td>
+                <td> <a href="{{url_for('todolist.delete_task',tid=id)}}" class="btn btn-danger">Delete</a> </td>
+            </tr>
         {% endfor %}
-    </ol>
+    </table>
 {% endblock %}

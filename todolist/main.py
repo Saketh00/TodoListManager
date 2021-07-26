@@ -31,5 +31,13 @@ def task_list():
     date=datetime.datetime.now().strftime('%Y-%m-%d')
     return render_template("tasklist.html", tasks=tasks, date=date)
 
+@bp.route("/<tid>")
+def delete_task(tid):
+    dbconn=db.get_db()
+    cursor=dbconn.cursor()
+    cursor.execute("delete from list where id=(%s)",(tid,))
+    dbconn.commit()
+    return redirect(url_for("todolist.task_list"),302)
+
 if __name__=="__main__":
     app.run()
