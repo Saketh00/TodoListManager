@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block body %}
-    {%if not tasks%}
-        There are no tasks. How about adding a task <a href="{{url_for('todolist.add_task')}}">here</a>
+    {% if not tasks%}
+        There are no tasks scheduled within a week. Click <a href="{{url_for('todolist.task_list')}}">here</a> for all the tasks.
     {% else %}
     <table class="table table-hover">
         <thead class="thead-dark">
@@ -15,7 +15,7 @@
             <tr>
                 <td>{{td_text}}</td>
                 <td>{{deadline}}</td>
-                <td> <a href="{{url_for('todolist.delete_task',value='all' ,tid=id)}}" class="btn btn-danger">Delete</a> </td>
+                <td> <a href="{{url_for('todolist.delete_task',value='week',tid=id)}}" class="btn btn-danger">Delete</a> </td>
             </tr>
         {% endfor %}
     </table>

@@ -28,16 +28,26 @@ def task_list():
     cursor=dbconn.cursor()
     cursor.execute("select * from list order by deadline ")
     tasks=cursor.fetchall()
-    date=datetime.datetime.now().strftime('%Y-%m-%d')
-    return render_template("tasklist.html", tasks=tasks, date=date)
+    return render_template("tasklist.html", tasks=tasks)
 
-@bp.route("/<tid>")
-def delete_task(tid):
+@bp.route("/weekschedule")
+def week_schedule():
+    dbconn=db.get_db()
+    cursor=dbconn.cursor()
+    cursor.execute("select * from list where (deadline<= now()+interval '7 day') order by deadline")
+    tasks=cursor.fetchall()
+    return render_template("weektask.html", tasks=tasks)
+
+@bp.route("/<value>/<tid>")
+def delete_task(value,tid):
     dbconn=db.get_db()
     cursor=dbconn.cursor()
     cursor.execute("delete from list where id=(%s)",(tid,))
     dbconn.commit()
-    return redirect(url_for("todolist.task_list"),302)
+    if value=="all":
+        return redirect(url_for("todolist.task_list"),302)
+    elif value=="week":
+        return redirect(url_for("todolist.week_schedule"), 302)
 
 if __name__=="__main__":
     app.run()
