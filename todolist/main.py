@@ -26,7 +26,7 @@ def add_task():
 def task_list():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    cursor.execute("select * from list order by deadline ")
+    cursor.execute("select * from list order by deadline asc")
     tasks=cursor.fetchall()
     return render_template("tasklist.html", tasks=tasks)
 
@@ -34,7 +34,7 @@ def task_list():
 def week_schedule():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    cursor.execute("select * from list where (deadline<= now()+interval '7 day') order by deadline")
+    cursor.execute("select * from list where (deadline<= now()+interval '7 day') order by deadline asc")
     tasks=cursor.fetchall()
     return render_template("weektask.html", tasks=tasks)
 
@@ -42,7 +42,7 @@ def week_schedule():
 def overdue_list():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    cursor.execute("select * from list where deadline<= now() order by deadline")
+    cursor.execute("select * from list where deadline<= now() order by deadline asc")
     tasks=cursor.fetchall()
     return render_template("overduetask.html", tasks=tasks)
 
@@ -58,6 +58,20 @@ def delete_task(value,tid):
         return redirect(url_for("todolist.week_schedule"), 302)
     elif value=="overdue":
         return redirect(url_for("todolist.overdue_list"), 302)
+
+@bp.route("/<value>/<tid>/<status>")
+def mark_task(value,tid,status):
+    dbconn=db.get_db()
+    cursor=dbconn.cursor()
+    cursor.execute("update list set status = NOT status where id=(%s)",(tid,))
+    dbconn.commit()
+    if value=="all":
+        return redirect(url_for("todolist.task_list"),302)
+    elif value=="week":
+        return redirect(url_for("todolist.week_schedule"), 302)
+    elif value=="overdue":
+        return redirect(url_for("todolist.overdue_list"), 302)
+
 
 if __name__=="__main__":
     app.run()
