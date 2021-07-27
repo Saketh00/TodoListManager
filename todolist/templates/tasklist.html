@@ -15,7 +15,7 @@
             <tr>
                 <td>{{td_text}}</td>
                 <td>{{deadline}}</td>
-                <td> <a href="{{url_for('todolist.delete_task',value='all' ,tid=id)}}" class="btn btn-danger">Delete</a> </td>
+                <td> <a href="{{url_for('todolist.delete_task',value='all' ,tid=id)}}" class="btn btn-danger" role="button">Delete</a> </td>
             </tr>
         {% endfor %}
     </table>
