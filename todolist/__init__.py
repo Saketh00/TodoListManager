@@ -20,9 +20,9 @@ def create_app():
         date=datetime.date.today()
         dbconn=db.get_db()
         cursor=dbconn.cursor()
-        cursor.execute("select count(*) from list")
+        cursor.execute("select count(*) from list where status=false")
         ntasks=cursor.fetchone()[0]
-        cursor.execute("select count(*) from list where deadline<= now()")
+        cursor.execute("select count(*) from list where deadline<= now() and status=false")
         noverdue=cursor.fetchone()[0]
         return render_template("index.html", ntasks=ntasks, noverdue=noverdue)
 

@@ -6,6 +6,7 @@
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="{{url_for('static',filename='main.css')}}" rel="stylesheet" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
         <title> TodoList Manager</title>
     </head>
     <body>
@@ -24,6 +25,13 @@
                 {% if not ntasks %}
                     There are no tasks. How about adding a task <a href="{{url_for('todolist.add_task')}}">here</a>
                 {% else %}
+                        {% if noverdue %}
+                        <script type="text/javascript">
+                            window.onload = function(){
+                                alert('You have {{noverdue}} tasks overdue!!');
+                            }
+                            </script>
+                        {% endif %}
                     There are {{ntasks}} tasks to be done and {{noverdue}} tasks are overdue. Click <a href="{{url_for('todolist.task_list')}}">here</a> to show all tasks or <a href="{{url_for('todolist.overdue_list')}}">here</a> for list of overdue tasks.
                 {% endif %}
                 {% endblock %}

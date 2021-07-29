@@ -34,7 +34,7 @@ def task_list():
 def week_schedule():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    cursor.execute("select * from list where (deadline<= now()+interval '7 day') order by deadline asc")
+    cursor.execute("select * from list where deadline >= now() and (deadline<= now()+interval '7 day') order by deadline asc")
     tasks=cursor.fetchall()
     return render_template("weektask.html", tasks=tasks)
 
