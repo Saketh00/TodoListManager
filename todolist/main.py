@@ -1,5 +1,4 @@
 import psycopg2
-import datetime
 from flask import Flask, render_template, g, request,redirect, url_for
 from flask import Blueprint
 from . import db
@@ -11,9 +10,8 @@ bp=Blueprint("todolist", "todolist", url_prefix="/todolist")
 def add_task():
     dbconn=db.get_db()
     cursor=dbconn.cursor()
-    date=datetime.date.today()
     if request.method=="GET":
-        return render_template("addtask.html",date=date)
+        return render_template("addtask.html")
     elif request.method=="POST":
         new_task=request.form.get("new_task")
         input_date=request.form.get("input_date")

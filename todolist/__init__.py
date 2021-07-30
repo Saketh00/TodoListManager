@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-import datetime
 import psycopg2
 
 def create_app():
@@ -17,7 +16,6 @@ def create_app():
 
     @app.route("/")
     def index():
-        date=datetime.date.today()
         dbconn=db.get_db()
         cursor=dbconn.cursor()
         cursor.execute("select count(*) from list where status=false")
